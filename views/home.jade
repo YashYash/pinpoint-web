@@ -1,0 +1,49 @@
+div(ng-app="homeApp")
+	head
+		//- Socket.io
+		script(src="/socket.io/socket.io.js")
+
+		//-Peer
+		script(src="http://cdn.peerjs.com/0.3/peer.js")		
+
+		//- Angular and Angular-route
+		script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js")
+		script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js")
+
+		//- Jquery 
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js")
+
+		//- D3
+		script(src="http://d3js.org/d3.v3.min.js")
+
+		//- Load streamApp.js
+		script(src="/javascripts/homeApp.js")
+
+		//- Home Controllers
+		script(src="/javascripts/controllers/homeController.js")
+
+		//-Home Directives
+		script(src="/javascripts/directives/homeDirective.js")
+
+		//-Home Factories
+		script(src="/javascripts/factories/socketFactory.js")
+
+		//- Webcam
+		script(src="/javascripts/vendor/webcam.js")
+
+		//- Google maps geo location
+		script(src="/javascripts/vendor/googlemaps.min.js")
+		script(src="/javascripts/vendor/event.js")
+		script(src="/javascripts/vendor/ui-map.min.js")
+
+		//- Home Stylesheet
+		link(rel="stylesheet" href="/stylesheets/style.css")
+
+	body
+		h1 This the angular home app
+
+
+		h1 #{user}
+		div(ng-view)
+
+			

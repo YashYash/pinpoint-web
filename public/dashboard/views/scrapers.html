@@ -1,0 +1,42 @@
+<scrapers>	
+	<div id="selector-panel" class="newpointer">
+		<ul id="zone">
+			<p class="title">ZONES</p>
+			<span class="icon-search"></span>
+			<input type="text" class="search-inputs" placeholder="Search Category" ng-model="searchzones">
+			<ul>
+				<li class="white animate-repeat" ng-click="getUrls(zone, currcategory)" ng-repeat="zone in zones | filter:searchzones"> {{zone.name}}</li>				
+			</ul>
+		</ul>	
+		<ul>
+			<p class="title">CATEGORIES</p>
+			<span class="icon-search"></span>
+			<input type="text" class="search-inputs" placeholder="Search Category" ng-model="searchcategories">
+			<ul>
+				<li class="white animate-repeat" ng-click="getUrls(currzone, category)" ng-repeat="category in categories | filter:searchcategories">{{category.name}}</li>
+			</ul>				
+		</ul>
+		<ul id="urls">
+			<p class="title">URLS</p>			
+			<span ng-if="urls.length > 0" class="icon-search"></span>
+			<span class="no-items" ng-if="urls.length < 1">No Urls here :(</span>			
+			<input type="text" class="search-inputs" placeholder="Search Category" ng-model="searchurls.route">
+			<ul>
+				<li class="white animate-repeat" ng-click="setUrl(url)" ng-repeat="url in urls | filter:searchurls"> {{url.route}}</li>				
+			</ul>
+		</ul>		
+		<ul id="list">
+			<p class="title">SCRAPE LIST</p>
+			<span class="no-items" ng-if="list.length < 1">Scrape list is empty!</span>
+			<p class="listcount" ng-if="list.length > 0 && list.length < 2">{{list.length}} item</p>
+			<p class="listcount" ng-if="list.length > 1">{{list.length}} items</p>
+			<input id="scrape" type="button" ng-click='scrapeAll()' class="newpointer" ng-if="list.length > 0" value="SCRAPE">
+			<ul>
+				<li class="white animate-repeat" ng-repeat="item in list">{{item.message}} <span class="icon-error" ng-click='removeAd(item)'></span></li>		
+			</ul>
+		</ul>
+	</div>
+	<div id="url-preview" ng-style="theme">
+		<h1 class="light white flicker">http://www.pinpoint.it/scrape/kijiji/<span id="zoneurl">{{currzone.name}}</span>/<span id="categoryName">{{route}}/{{code}}</span><span class="icon-plus newpointer" ng-click="updateList()"></span></h1>
+	</div>
+</scrapers>

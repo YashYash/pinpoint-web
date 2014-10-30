@@ -1,0 +1,116 @@
+div(ng-app="dashboardApp")
+	head
+		//- Socket.io
+		script(src="/socket.io/socket.io.js")
+
+		//- Peer
+		script(src="http://cdn.peerjs.com/0.3/peer.js")
+
+		//- Angular and Angular-route
+		script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js")
+		script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js")
+
+		//- Ng-animate
+		script(type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular-animate.js")
+
+		//- Jquery
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js")
+
+		//- D3
+		script(src="http://d3js.org/d3.v3.min.js")
+
+		//- Load dashboardApp.js
+		script(src="/dashboard/js/dashboardApp.js")
+
+		//- Scrapers
+		script(src="/dashboard/js/controllers/scrapersController.js")
+		script(src="/dashboard/js/directives/scrapersDirective.js")
+		link(rel="stylesheet" href="/dashboard/style/scrapers.css")
+
+		//- Ads
+		script(src="/dashboard/js/controllers/adsController.js")
+		script(src="/dashboard/js/directives/adsDirective.js")
+		link(rel="stylesheet" href="/dashboard/style/ads.css")
+
+		//- Global 
+		script(src="/dashboard/js/directives/globalDirective.js")
+		link(rel="stylesheet" href="/dashboard/style/global.css")
+		script(src="/dashboard/js/factories/socketfactory.js")
+
+		//- Google maps geo location
+		script(src="/javascripts/vendor/googlemaps.min.js")
+		script(src="/javascripts/vendor/event.js")
+		script(src="/javascripts/vendor/ui-map.min.js")
+
+		//- Moment
+		script(src='/javascripts/vendor/moment.min.js')
+		
+		//- Open Sans Font
+		link(href='http://fonts.googleapis.com/css?family=Open+Sans:300,700,600,400' rel='stylesheet' type='text/css')
+		link(href="https://fontastic.s3.amazonaws.com/ajkCKZcprWV8fCCd7UykoN/icons.css" rel="stylesheet")			
+
+	body
+		div#overlay(ng-style="theme")
+		i(style="position:relative" class="icon-day daynight newpointer" ng-click="theme={'opacity':'0.1'}")
+		i(style="position:relative" class="icon-night daynight newpointer" id="night" ng-click="theme={'opacity':'1','background':'#fd3c4e'}")		
+		global
+			div#lightning-blur(ng-click="hideFlash()")
+			form#lightining(ng-submit="flashRequest()")
+				span.icon-bolt-1
+				h1 Flash Mode
+				input#flashinput(type="text" ng-model="flash")
+				img(src="https://s3.amazonaws.com/uploads.hipchat.com/27243/752569/0KnNYAf43ubHpTf/728.GIF")
+			div#status-section.hide-status
+				ul#status-panels
+					li#panel-one.lipanels
+						h1#update-count {{count}}
+						span Ads have been scraped
+					li#panel-two.lipanels
+						div.panel-heading
+							h3 SCRAPE LIST	
+						ul.status-list
+							li.newpointer.animate-repeat(ng-repeat="item in list")
+								p {{item.message}}
+							p.empty(ng-if="list.length < 1") Nothing is qued up to scrape											
+					li#panel-three.lipanels
+						div.panel-heading
+							h3 CATEGORIES SCRAPED
+						ul.status-list
+							li.newpointer.animate-repeat(ng-repeat="category in scrapeCats")
+								p {{category.category}} in {{category.zone}}
+							p.empty(ng-if="scrapeCats.length < 1") No Categories have been scraped.						
+					li#panel-three.lipanels
+						div.panel-heading
+							h3 ADS
+						ul.status-list
+							li.newpointer.animate-repeat(ng-repeat="ad in scrapeAds")
+								p {{ad.title}}
+							p.empty(ng-if="scrapeAds.length < 1") No Ads have been scraped.								
+				span.icon-cross-1.newpointer(ng-click="scraperStatus()")
+				
+				div#status-bar
+					p.animate-status#current-status {{currentstatus}}
+			div#global.normal-global
+				div#route-nav
+					ul
+						a.newpointer#scrapers-nav-item(href="#/")
+							li.icon-dashboard Scrapers
+						a.newpointer#ads-nav-item(href="#/ads")
+							li.icon-layout Ads
+						a.newpointer#errors-nav-item
+							li.icon-issue-opened Error Log												
+				div#allicons
+					a#menu-toggle.menu-toggle.newpointer(ng-click='sideBar()')
+						span
+					span.icon-eye.newpointer#status(ng-click="scraperStatus()")
+						span#counter-notification(ng-if="count > 0") {{count}}
+					span.icon-bolt-1.newpointer#quick(ng-click="flashMode()")
+					span.icon-light-bulb.newpointer#idea
+				div#nav.newpointer
+					div#blur
+					div#user.circle
+					div#settings.circle
+					div#logout.circle
+				div#container(ng-view)
+
+			

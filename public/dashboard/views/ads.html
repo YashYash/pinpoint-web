@@ -1,0 +1,30 @@
+<ads>
+  <div id="ads-filter-panel">
+    <div id="view-mode">
+      <ul>
+        <li class="icon-thumbnails newpointer" id="tiles" ng-click="viewMode('tiles')"></li>
+        <li class="icon-dropdown newpointer" id="listview" ng-click="viewMode('list')"></li>
+      </ul>
+    </div>
+    <ul class='filter-scrollers' id="zones" ng-repeat="zone in zones">
+      <li>{{zone.name}}</li>
+    </ul>
+    <ul class='filter-scrollers' id="categories" ng-repeat="category in categories">
+      <li>{{category.name}}</li>
+    </ul>
+    <ul class='filter-scrollers' id="urls">
+      <li>{{url.}}</li>
+    </ul>
+  </div>
+  <div id="ads">
+    <ul id="ads-list" class="tiles">
+      <li ng-repeat="ad in ads" class="newpointer" ng-class="{automobiles: (ads.length > 0)}">
+        <div id="image">
+          <img src="{{ad.images[0]}}">
+        </div>
+        <div id="item-overlay"></div>
+        <p>{{ad.title}}</p>
+      </li>
+    </ul>
+  </div>
+</ads>

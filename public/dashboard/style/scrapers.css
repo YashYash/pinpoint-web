@@ -1,0 +1,221 @@
+#selector-panel{
+	width:100%;
+	height:80%;
+	position: relative;
+	display:-webkit-flex;
+	display:-moz-flex;
+	display: flex;
+	border-radius: 3px 3px 0px 0px;
+}
+
+#selector-panel ul{
+	display: inline-block;
+	height: 100%;
+	-webkit-flex-grow: 2;
+	-moz-flex-grow: 2;
+	flex-grow: 2;
+	padding: 0;
+	margin: 0;
+	overflow:hidden;
+	background-color: rgba(34,145,138,0.35);
+	margin: 0 1px;
+	position: relative;
+	-webkit-transition: 0.3s;
+	-moz-transition:0.3s;
+	transition:0.3s;
+}
+
+#selector-panel ul .icon-search{
+	position: absolute;
+	top: 80px;
+	left: 0;
+	right: 0;
+	text-align: center;
+	color: white;
+	cursor: url('https://s3.amazonaws.com/uploads.hipchat.com/27243/752569/INXZuKubJlirzex/pointer.png');;
+}
+
+#selector-panel ul .icon-search:hover{
+	text-shadow: 0 0 3px white;
+}
+#selector-panel ul ul{
+	height: 48%;
+	overflow-y: scroll;
+	width: 100%;
+	padding-top: 23px;
+	background: none;
+	text-align: center;
+	background:none !important;
+	position: relative;
+	top:120px;
+}
+
+#selector-panel ul ul::-webkit-scrollbar {
+	display: none;
+}
+
+#selector-panel ul:hover{
+	background-color: rgba(34,145,138,0.55);
+	-webkit-transition:0.3s;
+	-moz-transition:0.3s;
+	transition:0.3s;
+}
+
+#selector-panel ul .title{
+	position: absolute;
+	background: rgba(238,238,238,0.2);
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	color: white;
+	padding: 7px 0px;
+	font-weight: 100;
+}
+
+.listcount{
+	position: absolute;
+	top: 62px;
+	text-align: center;
+	width: 100%;
+	margin: auto;
+	color: white;
+	font-size: 50px;
+	font-weigth: 100;
+	font-weight: 100;	
+}
+
+#selector-panel  ul li .icon-error{
+	margin-left: 10px;
+	position: relative;
+	top: 2px;
+	-webkit-transition:0.3s;
+	-moz-transition:0.3s;
+	transition:0.3s;
+}
+
+#selector-panel ul li .icon-error:hover{
+	text-shadow:0 0 4px white;
+	-webkit-transition:0.3s;
+	-moz-transition:0.3s;
+	transition:0.3s;
+}
+
+.search-inputs{
+	position: absolute;
+	top: 75px;
+	left: 0;
+	right: 0;
+	margin: auto;
+	width: 80%;
+	background: rgba(238,238,238,0.3);
+	border: 0;
+	outline: 0;
+	outline: 0;
+	height: 29px;
+	color: white;
+	border-radius: 32px;
+	font-size: 13px;
+	padding-left: 36px;
+	font-weight: 100;	
+	display:none;
+}
+
+#selector-panel ul li{
+	padding: 14px 0px;
+	border-top: 1px solid rgba(238,238,238,0.2);
+	font-weight: 100;
+	text-transform: capitalize;
+	-webkit-transition:0.3s;
+	-moz-transition:0.3s;
+	transition:0.3s;
+}
+
+#selector-panel ul li:hover{
+	background: rgb(34,145,138);
+	-webkit-transition:0.3s;
+	-moz-transition:0.3s;
+	transition:0.3s;
+}
+
+#url-preview{
+	width:100%;
+	height:20%;
+	position: relative;
+	text-align: center;
+	opacity: 1 !important;
+	border-radius: 0 0 3px 3px;
+}
+
+#url-preview h1{
+	font-size: 24px;
+	text-align: center;
+	margin: 0;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	height: 33px;
+	vertical-align: middle;
+	margin: auto;
+}
+
+#url-preview h1 .icon-plus{
+	margin-left: 23px;
+	position: relative;
+	top: 2px;
+	cursor:url('https://s3.amazonaws.com/uploads.hipchat.com/27243/752569/INXZuKubJlirzex/pointer.png');;
+	-webkit-transition:0.3s;
+	-moz-transition:0.3s;
+	transition:0.3s;
+}
+
+#url-preview h1 .icon-plus:hover{
+	text-shadow: 0 0 4px white;
+	-webkit-transition:0.3s;
+	-moz-transition:0.3s;
+	transition:0.3s;
+}
+
+.no-items {
+	position: absolute;
+	color:white;
+	font-weight: 100;
+	text-align: center;
+	margin:auto;
+	top:0;
+	bottom:0;
+	vertical-align: middle;
+	height: 30px;
+	left:0;
+	right:0;
+	padding:0px 10px;
+}
+
+#scrape{
+	width: 70%;
+	background: none;
+	border: 0;
+	outline: 0; 
+	background: rgba(21,194,210,0.6);
+	bottom: 33;
+	position: absolute;
+	color: white;
+	height: 40px;
+	font-size: 14px;
+	margin: auto;
+	left: 0;
+	right: 0;
+	border-radius: 2px;	
+	-webkit-transition:0.3s;
+	-moz-transition:0.3s;
+	transition:0.3s;
+}
+
+#scrape:hover{
+	-webkit-transition:0.3s;
+	-moz-transition:0.3s;
+	transition:0.3s;
+	background: rgba(21,194,210,0.8);;
+}

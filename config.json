@@ -1,0 +1,27 @@
+{
+  "all": {
+    "redis": {
+      "port": 6379,
+      "host": "127.0.0.1"
+    }
+  },
+  "development": {
+    "env": "development",
+    "db": "mongodb://localhost:27017/pinpoint-dev"
+  },
+  "staging": {
+    "env": "staging",
+    "db": "mongodb://localhost:27017/pinpoint-staging",
+    "redis": {
+      "pass": ""
+    }
+
+  },
+  "production": {
+    "env": "production",
+    "db": "mongodb://localhost:27017/pinpoint-production",
+    "redis": {
+      "pass": ""
+    }
+  }
+}

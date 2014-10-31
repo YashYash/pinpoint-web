@@ -25,6 +25,7 @@ var fs = require("fs");
 
 var redis = require('redis');
 var app = module.exports.app = express();
+var compressor = require('node-minify');
 global.appserver = http.createServer(app);
 global.io = require('socket.io').listen(global.appserver, {
   log: true
@@ -33,6 +34,7 @@ socket = io.sockets.on('connection', function(socket) {
   console.log('#### Socket.io Connected. Port 3000');
   return socket;
 });
+
 var mongoose = require('mongoose');
 var Account = require('./models/account');
 var passport = require('passport');
@@ -53,9 +55,6 @@ var chat = require('./api/chat');
 
 var router = express.Router();
 
-
-// view engine setup
-// app.set('port', process.env.PORT || 3000)
 mongoose.set('debug', true);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -78,21 +77,10 @@ app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
-
-  // Website you wish to allow to connect
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8100', 'http://local.rocketu.com');
-
-  // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-  // Request headers you wish to allow
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-  // Set to true if you need the website to include cookies in the requests sent
-  // to the API (e.g. in case you use sessions)
   res.setHeader('Access-Control-Allow-Credentials', true);
-
-  // Pass to next layer of middleware
   next();
 });
 
@@ -116,7 +104,7 @@ app.use(function(req, res, next) {
 });
 
 /// error handlers
-
+var compressor = require('./minify/compressor');
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
@@ -151,4 +139,5 @@ app.use(function(err, req, res, next) {
   });
 });
 
+app.use(express.static(__dirname + 'public'));
 module.exports = app;

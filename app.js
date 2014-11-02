@@ -1,5 +1,4 @@
 settings = require('./settings');
-var NODE_ENV = 'development';
 require('newrelic');
 var express = module.exports.express = require('express');
 var logfmt = require("logfmt");
@@ -18,7 +17,6 @@ global.appserver = http.createServer(app);
 global.io = require('socket.io').listen(global.appserver, {
   log: true
 });
-globalEnv = NODE_ENV;
 socket = io.sockets.on('connection', function(socket) {
   console.log('#### Socket.io Connected. Port ' + 3000);
   return socket;
@@ -98,6 +96,7 @@ app.use(function(req, res, next) {
 // will print stacktrace
 
 if (!process.env.NODE_ENV) {
+  globalNav = 'development';
   console.log("#### Pinpoint in development ####");
   console.log("Server listening to port " + 3000);
   console.log("Using dev database - 'pinpoint-dev'")
@@ -114,6 +113,7 @@ if (!process.env.NODE_ENV) {
 }
 
 if (process.env.NODE_ENV === 'production') {
+  globalNav = 'production';
   console.log("#### Pinpoint in production ####");
   console.log("Server listening to port " + 3000);
   console.log("Using production database - 'pinpoint-dev'")

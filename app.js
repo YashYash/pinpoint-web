@@ -1,26 +1,8 @@
 var port = Number(process.env.PORT || 3000);
-require('newrelic');
-require('./config')({
-  key: 'pinpoint',
-  port: port,
-  base: '/',
-  development: {
-    app: {
-      url: 'localhost:' + port
-    }
-  },
-  staging: {
-    app: {
-      url: 'localhost:3020'
-    }
-  },
-  production: {
-    app: {
-      url: 'http://pinpoint-web.herokuapp.com'
-    }
-  }
-});
 
+settings = require('./settings');
+var NODE_ENV = 'development';
+require('newrelic');
 var express = module.exports.express = require('express');
 var logfmt = require("logfmt");
 var path = require('path');
@@ -116,10 +98,28 @@ app.use(function(req, res, next) {
 /// error handlers
 // development error handler
 // will print stacktrace
-if (app.get('env') === 'development') {
+
+if (NODE_ENV === 'development') {
+  console.log('#### THIS IS THE TESTING ENVIRONMENT');
   console.log("#### Pinpoint in development ####");
   console.log("Server listening to port " + port);
   console.log("Using dev database - 'pinpoint-dev'")
+  appserver.listen(port);
+  // mongoose.connect('mongodb://pinpoint-founder:kobefederer1qaz@ds049170.mongolab.com:49170/pinpoint');
+  mongoose.connect('mongodb://localhost:27017/pinpoint-dev');
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
+    });
+  });
+}
+
+if (NODE_ENV === 'production') {
+  console.log("#### Pinpoint in production ####");
+  console.log("Server listening to port " + port);
+  console.log("Using production database - 'pinpoint-dev'")
   appserver.listen(port);
   mongoose.connect('mongodb://pinpoint-founder:kobefederer1qaz@ds049170.mongolab.com:49170/pinpoint');
   // mongoose.connect('mongodb://localhost:27017/pinpoint-dev');
@@ -130,6 +130,10 @@ if (app.get('env') === 'development') {
       error: err
     });
   });
+}
+
+if(app.get('env') === 'production') {
+  console.log('This is the production environment');
 }
 
 // passport config

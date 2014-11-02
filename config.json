@@ -6,8 +6,8 @@
     }
   },
   "development": {
-    "env": "development",
-    "db": "mongodb://localhost:27017/pinpoint-dev"
+    "env": "developmenttt",
+    "db": "mongodb://pinpoint-founder:kobefederer1qaz@ds049170.mongolab.com:49170/pinpoint"
   },
   "staging": {
     "env": "staging",
@@ -15,11 +15,10 @@
     "redis": {
       "pass": ""
     }
-
   },
   "production": {
     "env": "production",
-    "db": "mongodb://localhost:27017/pinpoint-production",
+    "db": "mongodb://pinpoint-founder:kobefederer1qaz@ds049170.mongolab.com:49170/pinpoint",
     "redis": {
       "pass": ""
     }

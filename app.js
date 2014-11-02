@@ -20,7 +20,7 @@ require('./config')({
   }
 });
 
-var express = module.exports.express = require('express')
+var express = module.exports.express = require('express');
 var path = require('path');
 var favicon = require('static-favicon');
 var logger = require('morgan');
@@ -36,6 +36,7 @@ global.appserver = http.createServer(app);
 global.io = require('socket.io').listen(global.appserver, {
   log: true
 });
+globalEnv = app.get('env');
 socket = io.sockets.on('connection', function(socket) {
   console.log('#### Socket.io Connected. Port 3000');
   return socket;
@@ -130,7 +131,8 @@ if (app.get('env') === 'development') {
 
 if (app.get('env') === 'production') {
   console.log("#### Pinpoint in production ####");
-  console.log("Using Production database - 'pinpoint-dev'")
+  console.log("Using Production database - 'pinpoint'");
+  appserver.listen('http://pinpoint-web.herokuapp.com');
   mongoose.connect('mongodb://pinpoint-founder:kobefederer1qaz@ds049170.mongolab.com:49170/pinpoint');
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);

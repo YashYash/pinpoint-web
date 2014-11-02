@@ -1,4 +1,4 @@
-div(ng-app="dashboardApp")
+div(ng-app="dashboardApp" ng-init="env='#{environment}'")
 	head
 		//- Socket.io
 		script(src="/socket.io/socket.io.js")

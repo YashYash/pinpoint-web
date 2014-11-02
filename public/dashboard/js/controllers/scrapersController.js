@@ -1,6 +1,7 @@
 dashboardApp.controller('scrapersController', function($scope, $location, socket, $http) {
   'use strict';
-
+  console.log('#### THIS IS THE ENVIRONMENT ####');
+  console.log($scope.env);
   $scope.url = $location.$$url;
   $scope.activateNav($scope.url);
   $scope.onload();

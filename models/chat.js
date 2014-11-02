@@ -1,5 +1,5 @@
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema
+    Schema = mongoose.Schema;
 
 var Chat = new Schema({
     shortname: String,
@@ -11,8 +11,7 @@ var Chat = new Schema({
         type: Date, 
         default: Date.now
     },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'Account', unique: true },
-    sentTo: { type: mongoose.Schema.Types.ObjectId, ref: 'Account', unique: true },
+    username: String,
     modified: Date     
 });
 

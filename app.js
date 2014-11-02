@@ -87,7 +87,7 @@ app.use(function(req, res, next) {
 /// Routes ///
 app.use('/', routes);
 app.use('/scrape/kijiji/', kijiji);
-app.use('/set/', set);
+app.use('/generate/', set);
 app.use('/dashboard/', dashboard);
 
 /// Apis ///
@@ -104,7 +104,6 @@ app.use(function(req, res, next) {
 });
 
 /// error handlers
-var compressor = require('./minify/compressor');
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
@@ -112,7 +111,8 @@ if (app.get('env') === 'development') {
   console.log("Server listening to port 3000");
   console.log("Using dev database - 'pinpoint-dev'")
   appserver.listen(3000);
-  mongoose.connect('mongodb://localhost:27017/pinpoint-dev');
+  mongoose.connect('mongodb://pinpoint-founder:kobefederer1qaz@ds049170.mongolab.com:49170/pinpoint');
+  // mongoose.connect('mongodb://localhost:27017/pinpoint-dev');
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {

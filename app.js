@@ -99,8 +99,7 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 
-if (NODE_ENV === 'development') {
-  console.log('#### THIS IS THE TESTING ENVIRONMENT');
+if (!process.env.NODE_ENV) {
   console.log("#### Pinpoint in development ####");
   console.log("Server listening to port " + port);
   console.log("Using dev database - 'pinpoint-dev'")
@@ -116,7 +115,7 @@ if (NODE_ENV === 'development') {
   });
 }
 
-if (NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   console.log("#### Pinpoint in production ####");
   console.log("Server listening to port " + port);
   console.log("Using production database - 'pinpoint-dev'")
@@ -130,10 +129,6 @@ if (NODE_ENV === 'production') {
       error: err
     });
   });
-}
-
-if(app.get('env') === 'production') {
-  console.log('This is the production environment');
 }
 
 // passport config

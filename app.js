@@ -96,7 +96,7 @@ app.use(function(req, res, next) {
 // will print stacktrace
 
 if (!process.env.NODE_ENV) {
-  globalNav = 'development';
+  globalEnv = 'development';
   console.log("#### Pinpoint in development ####");
   console.log("Server listening to port " + 3000);
   console.log("Using dev database - 'pinpoint-dev'")
@@ -113,7 +113,7 @@ if (!process.env.NODE_ENV) {
 }
 
 if (process.env.NODE_ENV === 'production') {
-  globalNav = 'production';
+  globalEnv = 'production';
   console.log("#### Pinpoint in production ####");
   console.log("Server listening to port " + 3000);
   console.log("Using production database - 'pinpoint-dev'")

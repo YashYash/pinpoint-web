@@ -1,3 +1,4 @@
+require('newrelic');
 require('./config')({
   key: 'pinpoint',
   port: 3000,
@@ -11,8 +12,13 @@ require('./config')({
     app: {
       url: 'localhost:3020'
     }
+  },
+  production: {
+    app: {
+      url: 'http://pinpoint-web.herokuapp.com'
+    }
   }
-})
+});
 
 var express = module.exports.express = require('express')
 var path = require('path');
@@ -122,13 +128,10 @@ if (app.get('env') === 'development') {
   });
 }
 
-if (app.get('env') === 'staging') {
-  console.log("#### Pinpoint in Staging ####");
-  console.log("Server listening to port 3020");
-  console.log("Using staging database - 'pinpoint-dev'")
-  appserver.listen(3020);
-  // mongoose.connect('mongodb://localhost:27017/pinpoint-dev');
-  mongoose.connect('mongodb://localhost:27017/pinpoint-staging');
+if (app.get('env') === 'production') {
+  console.log("#### Pinpoint in production ####");
+  console.log("Using Production database - 'pinpoint-dev'")
+  mongoose.connect('mongodb://pinpoint-founder:kobefederer1qaz@ds049170.mongolab.com:49170/pinpoint');
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {

@@ -36,7 +36,7 @@ global.appserver = http.createServer(app);
 global.io = require('socket.io').listen(global.appserver, {
   log: true
 });
-globalEnv = app.get('env');
+globalEnv = app.settings.env;
 socket = io.sockets.on('connection', function(socket) {
   console.log('#### Socket.io Connected. Port 3000');
   return socket;
@@ -113,7 +113,7 @@ app.use(function(req, res, next) {
 /// error handlers
 // development error handler
 // will print stacktrace
-if (app.get('env') === 'development') {
+if (app.settings.env === 'development') {
   console.log("#### Pinpoint in development ####");
   console.log("Server listening to port 3000");
   console.log("Using dev database - 'pinpoint-dev'")
@@ -129,7 +129,7 @@ if (app.get('env') === 'development') {
   });
 }
 
-if (app.get('env') === 'production') {
+if (app.settings.env !== 'development') {
   console.log("#### Pinpoint in production ####");
   console.log("Using Production database - 'pinpoint'");
   appserver.listen(3000);

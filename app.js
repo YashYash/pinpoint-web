@@ -20,7 +20,7 @@ global.appserver = http.createServer(app);
 global.io = require('socket.io').listen(global.appserver, {
   log: true
 });
-globalEnv = app.settings.env;
+globalEnv = NODE_ENV;
 socket = io.sockets.on('connection', function(socket) {
   console.log('#### Socket.io Connected. Port ' + port);
   return socket;
@@ -47,7 +47,7 @@ var chat = require('./api/chat');
 var router = express.Router();
 
 mongoose.set('debug', true);
-app.use(logfmt.requestLogger());
+// app.use(logfmt.requestLogger());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(favicon());

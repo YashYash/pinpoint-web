@@ -132,7 +132,7 @@ if (app.get('env') === 'development') {
 if (app.get('env') === 'production') {
   console.log("#### Pinpoint in production ####");
   console.log("Using Production database - 'pinpoint'");
-  appserver.listen('http://pinpoint-web.herokuapp.com');
+  appserver.listen(3000);
   mongoose.connect('mongodb://pinpoint-founder:kobefederer1qaz@ds049170.mongolab.com:49170/pinpoint');
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);

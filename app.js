@@ -122,6 +122,22 @@ if (app.get('env') === 'development') {
   });
 }
 
+if (app.get('env') === 'staging') {
+  console.log("#### Pinpoint in Staging ####");
+  console.log("Server listening to port 3020");
+  console.log("Using staging database - 'pinpoint-dev'")
+  appserver.listen(3020);
+  // mongoose.connect('mongodb://localhost:27017/pinpoint-dev');
+  mongoose.connect('mongodb://localhost:27017/pinpoint-staging');
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
+    });
+  });
+}
+
 // passport config
 var Account = require('./models/account');
 passport.use(new LocalStrategy(Account.authenticate()));

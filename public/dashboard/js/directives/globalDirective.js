@@ -1,4 +1,4 @@
-;dashboardApp.directive('global', function($http, socket) {
+dashboardApp.directive('global', function($http, socket) {
     'use strict';
     var linkFn;
     linkFn = function(scope, element, attrs) {
@@ -38,6 +38,49 @@
             $('#menu-toggle').toggleClass('shifticons');
         };   
 
+        // Auth 
+        scope.loginBlur = function() {
+            console.log('blurring the surroundings');
+            $('#global').addClass('globalblur');
+            $('#auth').fadeIn();
+        };
+
+        scope.loginError = function() {
+            var reset = function() {
+                $('#auth').animate({
+                    right:'0px',
+                    left: '10px'
+                }, 50); 
+                setTimeout(function() {
+                    $('#auth').animate({
+                        right:'0px',
+                        left: '0px'
+                    }, 50); 
+                }, 100);               
+            };
+            var right = function() {
+                $('#auth').animate({
+                    left: '0px',
+                    right:'10px'
+                }, 50);  
+                reset();              
+            };            
+            var left = function() {
+                $('#auth').animate({
+                    left:'10px'
+                }, 50);
+                right();
+            };
+            var animate = function() {
+                left();
+            };
+            animate();
+        };
+
+        scope.loguserIn = function() {
+            $('#global').removeClass('globalblur');
+            $('#auth').fadeOut();            
+        };
         // Flash
         scope.flashMode = function() {
         	$('#global').addClass('globalblur');

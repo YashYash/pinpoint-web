@@ -1,11 +1,19 @@
-dashboardApp.controller('scrapersController', function($scope, $location, socket, $http) {
+dashboardApp.controller('scrapersController', function(
+  $scope, 
+  $location, 
+  socket, 
+  $http) {
+
   'use strict';
+
   console.log('#### THIS IS THE ENVIRONMENT ####');
   console.log($scope.env);
   $scope.url = $location.$$url;
   $scope.activateNav($scope.url);
   $scope.onload();
-  console.log('scrapers controller is working');
+
+  console.log('#### Scraper Controller');
+  
   $scope.zone = [];
   $scope.currzone = '';
   $scope.currcategory = '';
@@ -13,6 +21,7 @@ dashboardApp.controller('scrapersController', function($scope, $location, socket
   $scope.urls = [];
   $scope.route = '';
   $scope.code = '';
+
   $scope.getZones = function() {
     $http.get('/api/zones').success(function(zones) {
       $scope.zones = zones;
@@ -36,7 +45,7 @@ dashboardApp.controller('scrapersController', function($scope, $location, socket
       console.log('status: ' + status);
       console.log('headers: ' + headers);
       console.log('config: ' + config);
-    })
+    });
   };
 
   $scope.getUrls = function(zone, cat) {
@@ -54,7 +63,7 @@ dashboardApp.controller('scrapersController', function($scope, $location, socket
       console.log('status: ' + status);
       console.log('headers: ' + headers);
       console.log('config: ' + config);
-    })
+    });
   };
 
   $scope.check = function() {
@@ -129,7 +138,6 @@ dashboardApp.controller('scrapersController', function($scope, $location, socket
       if ($scope.list.length > $scope.index) {
         $scope.scrape($scope.index);
       } else {
-        console.log('done looping through this shit');
         $scope.$apply(function() {
           $scope.index = 0;
           $scope.list = [];
@@ -137,7 +145,6 @@ dashboardApp.controller('scrapersController', function($scope, $location, socket
 
       }
     });
-    socket.emit('scrape request', 'show up in the terminal');
     $scope.scrape($scope.index);
   };
 

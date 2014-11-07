@@ -1,6 +1,10 @@
-dashboardApp.controller('adsController', function($scope, $location, socket, $http) {
+dashboardApp.controller('adsController', function(
+  $scope, 
+  $location, 
+  socket, 
+  $http) {
   'use strict';
-  console.log('this is the ads controller');
+  console.log('#### Ads Controller');
 
   $scope.url = $location.$$url;
   $scope.activateNav($scope.url);

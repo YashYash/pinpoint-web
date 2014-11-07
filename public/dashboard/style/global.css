@@ -359,6 +359,79 @@ body {
 .circle:hover {
   background: rgba(221, 214, 214, 0.85);
 }
+
+/*Auth*/
+form#auth{
+  display:none;
+  z-index: 5000;
+  position: absolute;
+  left: );
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 450px;
+  vertical-align: middle;
+  height: 285px;
+  text-align: center;
+  background: rgba(238,238,238,0.3);
+  border: 3px solid white;
+  border-radius: 5px;  
+}
+
+form#auth h1{
+  color: white;
+  font-weight: 100;
+  padding: 10px 0px;  
+}
+
+form#auth input{
+  display: block;
+  margin: 20px auto auto;
+  border: 1px solid white;
+  outline: 0px;
+  z-index: 100;
+  color: white;
+  font-size: 14px;
+  text-align: center;
+  font-weight: 100;
+  -webkit-transition: 0.3s ease;
+  transition: 0.3s ease;
+  background: none;
+  height: 40px;
+  width: 80%;
+  border-radius: 3px;
+  text-align: left;
+  padding-left: 10px;
+}
+
+form#auth button{
+  background: rgba(253, 60, 78, 1);
+  border: none;
+  outline: 0;
+  width: 250px;
+  height: 40px;
+  margin-top: 20px;
+  color: white;
+  border-radius: 3px;
+  font-weight: 100;
+  font-size: 14px;
+  box-shadow: 0 0 3px rgba(1,1,1,0.6);
+  text-align: center;  
+  transition:0.2s;
+}
+
+form#auth button:hover{
+  box-shadow: 0 0 5px rgba(1,1,1,0.6);
+}
+
+form#auth p {
+  font-size: 12px;
+  position: relative;
+  top: 10px;
+  color: brown;  
+}
 /*Container*/
 
 #container {

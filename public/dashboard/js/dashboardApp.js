@@ -1,4 +1,4 @@
-var dashboardApp = angular.module('dashboardApp', ['ngRoute', 'ui.map', 'ui.event', 'ngAnimate']);
+var dashboardApp = angular.module('dashboardApp', ['ngRoute', 'ui.map', 'ui.event', 'ngAnimate', 'ngStorage']);
 'use strict';
 dashboardApp.config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/', {

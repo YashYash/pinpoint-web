@@ -37,6 +37,7 @@ socket.on('testing connection', function(data) {
 scrape = function(category, zone, urlcode, pages) {
   console.log(zone);
   socket.emit('starting scraper', 'Starting Scrape');
+
   // Automobiles
   if (category === 'b-cars-trucks') {
     categoryName = 'Automobiles';
@@ -204,6 +205,7 @@ scrape = function(category, zone, urlcode, pages) {
   socket.emit('update status', status);
   globalzone = zone;
   globalpages = pages;
+
   var f = ff(function() {
     var urls = [{
       url: 'https://www.kijiji.ca/' + category + '/' + zone + '/' + urlcode,
@@ -557,8 +559,6 @@ scrape = function(category, zone, urlcode, pages) {
     });
   };
 };
-
-
 
 router.get('/:category/:zone/:urlcode/:pages', function(req, res) {
   var data = {

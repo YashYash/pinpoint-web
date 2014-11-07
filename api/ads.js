@@ -1,3 +1,4 @@
+'use strict';
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
@@ -9,51 +10,157 @@ var async = require('async');
 var ff = require('ff');
 var geocoder = require('geocoder');
 
-router.get('/carsandtrucks', function(req, res) {
-  f = ff(function() {
-    Ad.find().exec(f.slot());
-  }, function(ads) {
-    res.send(ads);
+router.get('/', function(req, res) {
+  var f = ff(function() {
+    Ad.find().sort({
+      created: 1
+    }).exec(f.slotMulti());
+  }, function(ads, err) {
+    if(!err) {
+      res.send(ads);  
+    } else {
+      console.log('#### Error in get call');
+      console.log('#### Err: ' + err);       
+    }
+    
   });
 });
 
-router.get('/carsandtrucks/:lng/:lat', function(req, res) {
-  f = ff(function() {
+router.get('/:id', function(req, res) {
+  var f = ff(function() {
+    Ad.findOne({
+      _id: req.params.id
+    }).populate('category').exec(f.slotMulti());
+  }, function(ad, err) {
+    if(!err) {
+      res.send(ad);  
+    } else {
+      console.log('#### Error in get call');
+      console.log('#### Err: ' + err);       
+    }
+    
+  });
+});
+
+router.get('/location/:lng/:lat', function(req, res) {
+  var f = ff(function() {
     Ad.find({
       geo: {
         '$near': [req.params.lng, req.params.lat]
       }
-    }).exec(f.slot());
-  }, function(ads) {
-    res.send(ads);
+    }).sort().populate('user').exec(f.slotMulti());
+  }, function(ads, err) {
+    if(!err) {
+      res.send(ads);  
+    } else {
+      console.log('#### Error in get call');
+      console.log('#### Err: ' + err);       
+    }
+    
   });
 });
 
-router.get('/ads/:zone/:category/', function(req, res) {
-  var data = [];
-  f = ff(function() {
+router.get('/category/location/:id/:lng/:lat', function(req, res) {
+  var f = ff(function() {
+    Ad.find({
+      category: req.params.id,
+      geo: {
+        '$near': [req.params.lng, req.params.lat]
+      }
+    }).exec(f.slotMulti());
+  }, function(ads, err) {
+    if(!err) {
+      res.send(ads);
+    } else {
+      console.log('#### Error in get call');
+      console.log('#### Err: ' + err);      
+    }
+  });
+});
+
+router.get('/category', function(req, res) {
+  var f = ff(function() {
+    Ad.find().populate('category').sort().exec(f.slotMulti());
+  }, function(ads, err) {
+    if(!err) {
+      res.send(ads);
+    } else {
+      console.log('#### Error in get call');
+      console.log('#### Err: ' + err);
+    }
+  });
+});
+
+router.get('/zone/:zone', function(req, res) {
+  var f = ff(function() {
     Ad.find({
       zone: req.params.zone
-    }).sort().exec(f.slot());
-  }, function(ads) {
-    res.send(ads);
-    async.eachSeries(ads, function(ad, callback) {
-      if (ad.category._id === req.params.category) {
-        data.push(ad);
-      }
-    }, function() {
-      res.send(data);
-    });
+    }).sort().exec(f.slotMulti());
+  }, function(ads, err) {
+    if(!err) {
+      res.send(ads);  
+    } else {
+      console.log('#### Error in get call');
+      console.log('#### Err: ' + err);      
+    }
   });
+});
+
+router.get('/:zone/:category', function(req, res) {
+  var data = [];
+  if (req.params.zone === 'all') {
+    var f = ff(function() {
+      Ad.find({
+        category: req.params.category
+      }).sort().exec(f.slotMulti());
+    }, function(ads, err) {
+      if(!err) {
+        res.send(ads);
+      } else {
+      console.log('#### Error in get call');
+      console.log('#### Err: ' + err);         
+      }
+    });
+  } else {
+    var g = ff(function() {
+      Ad.find({
+        zone: req.params.zone,
+        category: req.params.category
+      }).sort().exec(g.slotMulti());
+    }, function(ads, err) {
+      if(!err) {
+        res.send(ads);  
+      } else{
+      console.log('#### Error in get call');
+      console.log('#### Err: ' + err);         
+      }
+    });
+  }
 });
 
 router.get('/user/:user', function(req,res) {
-  console.log('called!!'); 
-  console.log("getting the user's ads ");
   var f = ff(function() {
-    Ad.find({user: req.params.user}).exec(f.slot());
-  }, function(ads) {
-    res.send(ads);
+    Ad.find({user: req.params.user}).exec(f.slotMulti());
+  }, function(ads, err) {
+    if(!err) {
+      res.send(ads);  
+    } else {
+      console.log('#### Error in get call');
+      console.log('#### Err: ' + err);       
+    }
+  });
+});
+
+router.get('/all/user/:user', function(req,res) {
+  var f = ff(function() {
+    Ad.find({user: req.params.user}).exec(f.slotMulti());
+  }, function(ads, err) {
+    if(!err) {
+      res.send(ads);  
+    } else {
+      console.log('#### Error in get call');
+      console.log('#### Err: ' + err);       
+    }
   });
 });
 
@@ -62,7 +169,7 @@ router.post('/new', function(req, res) {
   var ad;
   console.log(req.body);
   var shortname = req.body.title.replace(/\s/g, '').toLowerCase();
-  f = ff(function() {
+  var f = ff(function() {
     ad = new Ad({
       shortname: shortname,
       title: req.body.title,
@@ -86,7 +193,8 @@ router.post('/new', function(req, res) {
       size: req.body.size,
       tags: req.body.tags,
       user: req.body.user,
-      geo: req.body.geo
+      geo: req.body.geo,
+      category: req.body.category
     });
     ad.save(f.wait);
     socket.emit('new ad', ad);

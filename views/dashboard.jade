@@ -19,9 +19,6 @@ div(ng-app="dashboardApp" ng-init="env='#{environment}'")
 		//- Load dashboardApp.js
 		script(src="/dashboard/js/dashboardApp.js")
 
-		//-Auth
-		script(src="/dashboard/js/controllers/authController.js")		
-
 		//- Scrapers
 		script(src="/dashboard/js/controllers/scrapersController.js")
 		script(src="/dashboard/js/directives/scrapersDirective.js")
@@ -39,13 +36,8 @@ div(ng-app="dashboardApp" ng-init="env='#{environment}'")
 		script(src="/dashboard/js/factories/socketfactory.js")
 		script(src="/dashboard/js/services/authService.js")
 
-		//- Google maps geo location
-		script(src="/javascripts/vendor/googlemaps.min.js")
-		script(src="/javascripts/vendor/event.js")
-		script(src="/javascripts/vendor/ui-map.min.js")
-
 		//- Moment
-		script(src='/javascripts/vendor/moment.min.js')
+		script(src='/dashboard/js/vendor/moment.min.js')
 		
 		//- Open Sans Font
 		link(href='https://fonts.googleapis.com/css?family=Open+Sans:300,700,600,400' rel='stylesheet' type='text/css')

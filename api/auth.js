@@ -62,4 +62,91 @@ router.post('/login', function(req, res) {
   });
 });
 
+router.post('/check-username', function(req,res) {
+  console.log(req.body);
+  var f = ff(function() {
+    Account.findOne({username: req.body.username}).exec(f.slotMulti(2));
+  }, function(account, err) {
+    if(!err) {
+      if(account) {
+        console.log('#### Found the account');
+        console.log(account);
+        res.send('Not Available');
+      } else {
+        res.send('Username Available');
+      }
+    } else {
+      res.send('#### An error occured: ' + err);
+    }
+  });
+});
+
+router.post('/edit', function(req, res) {
+  console.log('#### Changing the username and email');
+  console.log(req.body);
+  var f = ff(function() {
+    Account.findOne({_id: req.body.id}).exec(f.slotMulti(2));
+  }, function(account, err) {
+    if(!err) {
+      if(account) {
+        console.log('#### Found the account. Updating the username and email');
+        account.username = req.body.username;
+        account.email = req.body.email;
+        account.save(f.wait());
+        var message = {
+          status: 'Username and email have been updated',
+          account: account
+        };
+        res.send(message);
+      } else {
+        console.log('#### Unable to find any account with this id: ' + req.body.id);
+      }
+    } else {
+      console.log('#### An error occured in the username post call');
+      console.log('### Err: ' + err);
+    }
+  });
+});
+
+router.post('/change-password', function(req, res) {
+  console.log('#### Changing the password');
+  var f = ff(function() {
+    Account.findOne({_id: req.body.id}).exec(f.slotMulti(2));
+  }, function(account, err) {
+    if(!err) {
+      if(account) {
+        account.comparePassword(req.body.currpassword, function(err, isMatch) {
+          if(err) {
+            console.log('#### An error occured while authenticating the password: ' + err);
+          } else {
+            console.log(isMatch);
+            if(!isMatch) {
+              console.log('#### Passwords do not match');
+              var error = {
+                message: 'Incorrect Password',
+              };            
+              res.send(error);
+            } else {
+              console.log('#### Passwords match. Updating the password');
+              account.password = req.body.newpassword;
+              account.save();
+              var success = {
+                message: 'Passwords changed',
+                user: account
+              };
+              res.send(success);
+            }
+          }
+        });
+        console.log('Passwords have been updated');
+      } else {
+        console.log('#### Unable to find any account with this id: ' + req.body.id);
+      }
+    } else {
+      console.log('#### An error occured in the password change post call');
+      console.log('### Err: ' + err);
+    }
+  });
+});
+
 module.exports = router;

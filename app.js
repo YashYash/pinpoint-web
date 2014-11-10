@@ -45,6 +45,7 @@ var chat = require('./api/chat');
 var auth = require('./api/auth');
 var categories = require('./api/categories');
 var user = require('./api/user');
+var kijijiPost = require('./api/kijiji');
 
 var router = express.Router();
 
@@ -94,6 +95,7 @@ app.use('/api/zones/', zones);
 app.use('/api/chat/', chat);
 app.use('/api/categories/', categories);
 app.use('/api/user/', user);
+app.use('/api/kijiji-post/', kijijiPost);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

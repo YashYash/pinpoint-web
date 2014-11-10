@@ -59,10 +59,10 @@ Account.pre('save', function(next) {
 });
 
 Account.methods.comparePassword = function(password, cb) {
-  console.log('Comparing passwords');
+  console.log('#### Starting to confirm password');
   console.log(password);
   bcrypt.compare(password, this.password, function(err, isMatch) {
-    console.log("still comparing");
+    console.log('#### Comparing ...');
     if(err) {
       console.log(err);
       return cb(err);

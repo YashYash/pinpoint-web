@@ -11,7 +11,6 @@ var Url = require('../models/url');
 var async = require('async');
 var ff = require('ff');
 var geocoder = require('geocoder');
-var phantom = require('phantom');
 var jq = require('jquerygo');
 var adurls = [];
 var globalcategory;

@@ -42,4 +42,30 @@ router.post('/wishlist/add', function(req, res) {
 		}
 	});
 });
+
+router.post('/wishlist/delete', function(req, res) {
+	console.log('#### Deleting a wishlist item');
+	console.log(req.body);
+	var f = ff(function() {
+		Account.findOne({_id: req.body.id}).exec(f.slotMulti(2));
+	}, function(account,err) {
+		if(!err) {
+			if(account){
+			    for (var i = 0; i < account.wishlist.length; i++) {
+			      if (req.body.wishlistId === account.wishlist[i]) {
+			      	console.log('#### Found the wishlist item. Now deleting it');
+			        account.wishlist.splice(i, 1);
+			        console.log('#### Item delted. Now Breaking');
+			        res.send('deleted successfully');
+			        break;
+			      }
+			    }
+			} else {
+				console.log('##### Unable to find any account realted to this id: ' + req.body.id);
+			}
+		} else {
+			console.log('#### An error occured in the account mongo query');
+		}
+	});
+});
 module.exports = router;

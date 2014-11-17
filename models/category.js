@@ -14,7 +14,12 @@ var Category = new Schema({
     type: {
         type: String
     },
-    ads: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ads', unique: true }],
+    background: {
+        type: String
+    },
+    icon: {
+        type: String
+    },
     urls: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Url', unique: true }],
     modified: Date     
 });

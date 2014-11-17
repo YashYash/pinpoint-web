@@ -2,7 +2,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     passportLocalMongoose = require('passport-local-mongoose'),
     bcrypt = require('bcrypt'),
-    SALT_WORK_FACTOR = 10
+    SALT_WORK_FACTOR = 10;
 
 var Account = new Schema({
   username: {
@@ -36,6 +36,16 @@ var Account = new Schema({
     ref:'Ads',
     unique: true
   }],
+  lng: String,
+  lat: String,  
+  geo: {
+    type: [Number],
+    index: '2d'
+  },
+  picture: {
+    type: String,
+    default: 'https://s3.amazonaws.com/uploads.hipchat.com/27243/752569/WU1GBARftv1zQZz/login-logo.png'
+  },
   modified: Date
 });
 

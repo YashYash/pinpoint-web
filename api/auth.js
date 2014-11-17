@@ -29,13 +29,13 @@ router.post('/login', function(req, res) {
     Account.findOne({username : req.body.username}).exec(f.slot());
   }, function(account) {
     if(!account) {
-      console.log('In correct username');
+      console.log('#### Incorrect Username');
       var error = {
         message: 'Incorrect Username',
       };
       res.send(error);
     } else {
-      console.log('username exists');
+      console.log('##### Account exits: ');
       console.log(account);
       account.comparePassword(req.body.password, function(err, isMatch) {
         if(err) {
@@ -43,13 +43,13 @@ router.post('/login', function(req, res) {
         } else {
           console.log(isMatch);
           if(!isMatch) {
-            console.log('Its not a match');
+            console.log('#### Passwords do not match');
             var error = {
               message: 'Incorrect Password',
             };            
             res.send(error);
           } else {
-            console.log('Its a match!!');
+            console.log('#### Passwords Match');
             var success = {
               message: 'Authenticated',
               user: account
@@ -138,7 +138,7 @@ router.post('/change-password', function(req, res) {
             }
           }
         });
-        console.log('Passwords have been updated');
+        console.log('#### Passwords have been updated');
       } else {
         console.log('#### Unable to find any account with this id: ' + req.body.id);
       }
@@ -149,4 +149,28 @@ router.post('/change-password', function(req, res) {
   });
 });
 
+router.post('/current-location', function(req,res) {
+  console.log('#### Updating the user\'s current location');
+  console.log(req.body);
+  var f = ff(function() {
+    Account.findOne({_id: req.body.id}).exec(f.slotMulti(2));
+  }, function(account, err) {
+    if(!err){
+      if(account) {
+        console.log('#### Found Account');
+        account.geo = [req.body.lng, req.body.lat];
+        account.lat = req.body.lat;
+        account.lng = req.body.lng;
+        console.log(account);
+        account.save();
+        console.log('#### Geo Location has been updated');
+        res.send('User Location Updated');
+      } else {
+        console.log('#### Unable to find an account with that id: ' + req.body.id);
+      }
+    } else{
+      console.log('#### An error occured setting the user\'s location');
+    }
+  });
+});
 module.exports = router;

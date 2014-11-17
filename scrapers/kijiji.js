@@ -290,8 +290,7 @@ scrape = function(category, zone, urlcode, pages) {
       l = ff(this, function() {
         Ad.remove({
           category: globalcategory._id,
-          zone: globalzone,
-          tags: globaltags
+          source: 'kijiji'
         }, function() {
           console.log('#### REMOVED ALL EXISTING ACTIVITIES FROM ' + categoryName + ' IN ZONE ' + zone + 'WITH TAGS' + globaltags);
           status = 'REMOVED ALL EXISTING ACTIVITIES FROM ' + categoryName + ' IN ZONE ' + zone + ' WITH TAGS ' + globaltags;
@@ -324,6 +323,7 @@ scrape = function(category, zone, urlcode, pages) {
           var price = '';
           var seller = '';
           var make = '';
+          var model = '';
           var address = '';
           var kilometers = '';
           var vehicletype = '';
@@ -489,15 +489,15 @@ scrape = function(category, zone, urlcode, pages) {
               socket.emit('update count', ad);
               console.log(ad);
               ad.save();
-              l = ff(function() {
-                Category.findOne({
-                  shortname: globalcategory.shortname
-                }).exec(l.slot());
-              }, function(category) {
-                console.log(category);
-                category.ads.push(ad._id);
-                category.save();
-              });
+              // l = ff(function() {
+              //   Category.findOne({
+              //     shortname: globalcategory.shortname
+              //   }).exec(l.slot());
+              // }, function(category) {
+              //   console.log(category);
+              //   category.ads.push(ad._id);
+              //   category.save();
+              // });
               console.log('saving the ad');
             }).onError(function(err) {
               console.log(err.stack);

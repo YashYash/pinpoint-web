@@ -185,7 +185,7 @@ router.post('/new', function(req, res) {
       description: req.body.description,
       drive: req.body.drive,
       fuel: req.body.fuel,
-      source: req.body.source,
+      source: 'user',
       petfriendly: req.body.petfriendly,
       furnished: req.body.furnished,
       bathrooms: req.body.bathrooms,
@@ -196,10 +196,20 @@ router.post('/new', function(req, res) {
       geo: req.body.geo,
       category: req.body.category
     });
-    ad.save(f.wait);
+    ad.save();
     socket.emit('new ad', ad);
     res.send(ad);
   });
 });
 
+router.post('/delete', function(req,res) {
+  console.log('#### Deleting ad');
+  console.log(req.body);
+  var f = ff(function() {
+    Ad.remove({_id: req.body._id}, function() {
+      console.log('#### Ad has been deleted');
+      res.send('deleted successfully');      
+    });
+  });
+});
 module.exports = router;

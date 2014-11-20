@@ -32,6 +32,7 @@ var holla = require('holla');
 var routes = require('./routes/index');
 var dashboard = require('./routes/dashboard');
 var kijiji = require('./scrapers/kijiji');
+var tracy = require('./scrapers/tracy');
 var set = require('./scrapers/set');
 
 var testapi = require('./api/testapi');
@@ -82,6 +83,7 @@ app.use(function(req, res, next) {
 /// Routes ///
 app.use('/', routes);
 app.use('/scrape/kijiji/', kijiji);
+app.use('/scrape/tracy/', tracy);
 app.use('/generate/', set);
 app.use('/dashboard/', dashboard);
 

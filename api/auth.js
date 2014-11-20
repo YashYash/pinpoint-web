@@ -8,14 +8,15 @@ var async = require('async');
 var ff = require('ff');
 
 router.post('/register', function(req, res) {
-  console.log(req.body);
+  if ($scope.username)
+    console.log(req.body);
   var account = new Account({
     username: req.body.username,
     password: req.body.password,
     email: req.body.email
   });
   account.save(function(err) {
-    if(err) {
+    if (err) {
       console.log('err ' + err);
     } else {
       res.send(account);
@@ -26,9 +27,11 @@ router.post('/register', function(req, res) {
 router.post('/login', function(req, res) {
   console.log(req.body);
   var f = ff(function() {
-    Account.findOne({username : req.body.username}).exec(f.slot());
+    Account.findOne({
+      username: req.body.username
+    }).exec(f.slot());
   }, function(account) {
-    if(!account) {
+    if (!account) {
       console.log('#### Incorrect Username');
       var error = {
         message: 'Incorrect Username',
@@ -38,15 +41,15 @@ router.post('/login', function(req, res) {
       console.log('##### Account exits: ');
       console.log(account);
       account.comparePassword(req.body.password, function(err, isMatch) {
-        if(err) {
+        if (err) {
           console.log(err);
         } else {
           console.log(isMatch);
-          if(!isMatch) {
+          if (!isMatch) {
             console.log('#### Passwords do not match');
             var error = {
               message: 'Incorrect Password',
-            };            
+            };
             res.send(error);
           } else {
             console.log('#### Passwords Match');
@@ -62,13 +65,15 @@ router.post('/login', function(req, res) {
   });
 });
 
-router.post('/check-username', function(req,res) {
+router.post('/check-username', function(req, res) {
   console.log(req.body);
   var f = ff(function() {
-    Account.findOne({username: req.body.username}).exec(f.slotMulti(2));
+    Account.findOne({
+      username: req.body.username
+    }).exec(f.slotMulti(2));
   }, function(account, err) {
-    if(!err) {
-      if(account) {
+    if (!err) {
+      if (account) {
         console.log('#### Found the account');
         console.log(account);
         res.send('Not Available');
@@ -85,10 +90,12 @@ router.post('/edit', function(req, res) {
   console.log('#### Changing the username and email');
   console.log(req.body);
   var f = ff(function() {
-    Account.findOne({_id: req.body.id}).exec(f.slotMulti(2));
+    Account.findOne({
+      _id: req.body.id
+    }).exec(f.slotMulti(2));
   }, function(account, err) {
-    if(!err) {
-      if(account) {
+    if (!err) {
+      if (account) {
         console.log('#### Found the account. Updating the username and email');
         account.username = req.body.username;
         account.email = req.body.email;
@@ -111,20 +118,22 @@ router.post('/edit', function(req, res) {
 router.post('/change-password', function(req, res) {
   console.log('#### Changing the password');
   var f = ff(function() {
-    Account.findOne({_id: req.body.id}).exec(f.slotMulti(2));
+    Account.findOne({
+      _id: req.body.id
+    }).exec(f.slotMulti(2));
   }, function(account, err) {
-    if(!err) {
-      if(account) {
+    if (!err) {
+      if (account) {
         account.comparePassword(req.body.currpassword, function(err, isMatch) {
-          if(err) {
+          if (err) {
             console.log('#### An error occured while authenticating the password: ' + err);
           } else {
             console.log(isMatch);
-            if(!isMatch) {
+            if (!isMatch) {
               console.log('#### Passwords do not match');
               var error = {
                 message: 'Incorrect Password',
-              };            
+              };
               res.send(error);
             } else {
               console.log('#### Passwords match. Updating the password');
@@ -149,14 +158,16 @@ router.post('/change-password', function(req, res) {
   });
 });
 
-router.post('/current-location', function(req,res) {
+router.post('/current-location', function(req, res) {
   console.log('#### Updating the user\'s current location');
   console.log(req.body);
   var f = ff(function() {
-    Account.findOne({_id: req.body.id}).exec(f.slotMulti(2));
+    Account.findOne({
+      _id: req.body.id
+    }).exec(f.slotMulti(2));
   }, function(account, err) {
-    if(!err){
-      if(account) {
+    if (!err) {
+      if (account) {
         console.log('#### Found Account');
         account.geo = [req.body.lng, req.body.lat];
         account.lat = req.body.lat;
@@ -168,7 +179,7 @@ router.post('/current-location', function(req,res) {
       } else {
         console.log('#### Unable to find an account with that id: ' + req.body.id);
       }
-    } else{
+    } else {
       console.log('#### An error occured setting the user\'s location');
     }
   });
